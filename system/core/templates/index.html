@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Welcome to the Transportation Management System</h1>
+<div class="summary">
+    <h2>Summary</h2>
+    <p>Total Drivers: {{ driver_count }}</p>
+    <p>Total Vehicles: {{ vehicle_count }}</p>
+    <p>Total Farmers: {{ farmer_count }}</p>
+    <p>Total Jobs: {{ job_count }}</p>
+    <p>Total Revenue: {{ total_revenue|default_if_none:"0.00" }}</p>
+</div>
+
+<div>
+    <h2>Jobs in the Last 7 Days</h2>
+    <canvas id="jobsChart" width="400" height="200"></canvas>
+</div>
+
+<div>
+    <h2>Revenue in the Last 7 Days</h2>
+    <canvas id="revenueChart" width="400" height="200"></canvas>
+</div>
+
+<div class="recent-jobs">
+    <h2>Recent Jobs</h2>
+    <ul>
+        {% for job in recent_jobs %}
+        <li>{{ job.scheduled_date }}: {{ job.driver.name }} driving {{ job.vehicle.vehicle_number }} to {{
+            job.destination }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="recent-revenues">
+    <h2>Recent Revenues</h2>
+    <ul>
+        {% for revenue in recent_revenues %}
+        <li>{{ revenue.date }}: Job ID {{ revenue.job.id }} - Amount: ${{ revenue.amount }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<!-- Include Chart.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- JavaScript to render the charts -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Jobs Chart
+        const jobsCtx = document.getElementById('jobsChart').getContext('2d');
+        const jobsChart = new Chart(jobsCtx, {
+            type: 'line',
+            data: {
+                labels: {{ jobs_per_day.dates | safe }},
+        datasets: [{
+            label: 'Jobs Per Day',
+            data: {{ jobs_per_day.counts | safe }},
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.4)', // Updated background color
+        fill: true,
+        tension: 0.4, // Added line tension
+        borderWidth: 2 // Increased border width
+                }]
+            },
+        options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                labels: {
+                    fontColor: '#fff', // Set legend font color
+                    padding: 20 // Add padding around legend
+                },
+                position: 'bottom' // Move legend to bottom
+            }
+        },
+        scales: {
+            x: {
+                type: 'time',
+                time: {
+                    unit: 'day'
+                }
+            },
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+        });
+
+    // Revenue Chart
+    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+    const revenueChart = new Chart(revenueCtx, {
+        type: 'line',
+        data: {
+            labels: {{ revenues_per_day.dates | safe }},
+    datasets: [{
+        label: 'Revenue Per Day',
+        data: {{ revenues_per_day.amounts | safe }},
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.4)', // Updated background color
+        fill: true,
+        tension: 0.4, // Added line tension
+        borderWidth: 2 // Increased border width
+                }]
+            },
+    options: {
+        responsive: true,
+            plugins: {
+            legend: {
+                labels: {
+                    fontColor: '#fff', // Set legend font color
+                        padding: 20 // Add padding around legend
+                },
+                position: 'bottom' // Move legend to bottom
+            }
+        },
+        scales: {
+            x: {
+                type: 'time',
+                    time: {
+                    unit: 'day'
+                }
+            },
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+        });
+    });
+</script>
+{% endblock %}

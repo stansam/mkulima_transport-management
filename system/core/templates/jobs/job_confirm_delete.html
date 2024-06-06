@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Cancel Job{% endblock %}
+
+{% block content %}
+    <h1>Cancel Job</h1>
+    <p>Are you sure you want to cancel the job for "{{ object.farmer }}" with "{{ object.vehicle }}" by "{{ object.driver }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, cancel</button>
+        <a href="{% url 'job-list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}

@@ -1,0 +1,40 @@
+Develop a user-friendly system that allows the transportation company to hire drivers and allocate them to different vehicles.
+Allow the admin to place records or information about hired vehicles and registered farmers.
+Show jobs that have been scheduled, including details such as the driver, vehicle, farmer, pickup location, destination, cargo, and scheduled date/time.
+Track the revenue collected for each job.
+
+Based on these objectives, you'll need to create the following views:
+1. Driver Views
+
+DriverListView: List all the drivers in the system.
+DriverCreateView: Allow the admin to create a new driver.
+DriverUpdateView: Allow the admin to update the details of an existing driver.
+DriverDeleteView: Allow the admin to delete a driver.
+
+2. Vehicle Views
+
+VehicleListView: List all the vehicles in the system.
+VehicleCreateView: Allow the admin to create a new vehicle.
+VehicleUpdateView: Allow the admin to update the details of an existing vehicle.
+VehicleDeleteView: Allow the admin to delete a vehicle.
+
+3. Farmer Views
+
+FarmerListView: List all the registered farmers in the system.
+FarmerCreateView: Allow the admin to register a new farmer.
+FarmerUpdateView: Allow the admin to update the details of an existing farmer.
+FarmerDeleteView: Allow the admin to delete a farmer.
+
+4. Job Views
+
+JobListView: List all the scheduled jobs in the system.
+JobCreateView: Allow the admin to schedule a new job by assigning a driver, vehicle, and farmer, and providing the necessary details (pickup location, destination, cargo, scheduled date/time).
+JobUpdateView: Allow the admin to update the details of an existing job.
+JobDeleteView: Allow the admin to cancel or delete a scheduled job.
+
+5. Revenue Views
+
+RevenueListView: List all the revenue records in the system.
+RevenueCreateView: Allow the admin to record the revenue collected for a specific job.
+RevenueUpdateView: Allow the admin to update the details of an existing revenue record.
+RevenueDeleteView: Allow the admin to delete a revenue record.

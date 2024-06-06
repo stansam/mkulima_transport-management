@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Revenue{% endblock %}
+
+{% block content %}
+    <h1>Delete Revenue</h1>
+    <p>Are you sure you want to delete the revenue record for "{{ object.job }}" with an amount of "{{ object.amount }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, delete</button>
+        <a href="{% url 'revenue-list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}

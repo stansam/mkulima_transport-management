@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Jobs{% endblock %}
+
+{% block content %}
+    <h1>Jobs</h1>
+    <a href="{% url 'job-create' %}" class="btn btn-primary mb-3">Schedule Job</a>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Driver</th>
+                <th>Vehicle</th>
+                <th>Farmer</th>
+                <th>Pickup Location</th>
+                <th>Destination</th>
+                <th>Cargo</th>
+                <th>Scheduled Date/Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+                <tr>
+                    <td>{{ job.driver }}</td>
+                    <td>{{ job.vehicle }}</td>
+                    <td>{{ job.farmer }}</td>
+                    <td>{{ job.pickup_location }}</td>
+                    <td>{{ job.destination }}</td>
+                    <td>{{ job.cargo }}</td>
+                    <td>{{ job.scheduled_date }} {{ job.scheduled_time }}</td>
+                    <td>
+                        <a href="{% url 'job-update' job.pk %}" class="btn btn-sm btn-primary">Update</a>
+                        <a href="{% url 'job-delete' job.pk %}" class="btn btn-sm btn-danger">Cancel</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
